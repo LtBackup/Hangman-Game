@@ -4,7 +4,7 @@ var guessedLetter;
 var lettersGuessed = [];
 var filledLetters = [];
 var won = false;
-var lives = 5;
+var lives = 4;
 var wins = 0;
 var losses = 0;
 
@@ -24,8 +24,8 @@ function hasLetter(letter) {
 }
 
 function isValid(input) {
-    var letters = /^[A-Za-z]$/;
-    if (input.value.match(letters)) {
+    var az = /^[A-Za-z]$/;
+    if (input.match(az)) {
         return true;
     }
     else {
@@ -33,14 +33,14 @@ function isValid(input) {
     }
 }
 
-function isTrue(current) {
-    return current;
+function isCorrect(current) {
+    return current !== "_";
 }
 
 function fillAnswer(letter) {
     for (var i = 0; i < filledLetters.length; i++) {
         if (secretWord[i].toUpperCase() === letter.toUpperCase()) {
-            filledLetters[i] = true;
+            filledLetters[i] = secretWord[i].toUpperCase();
             console.log(filledLetters);
         }
     }
@@ -57,12 +57,19 @@ function alreadyGuessed(letter) {
 function reset() {
     lettersGuessed = [];
     filledLetters = [];
+    won = false;
+    lives = 4;
 }
 
 while (true) {
     secretWord = pickWord();
     for (var i = 0; i < secretWord.length; i++) {
-        filledLetters[i] = false;
+        if (secretWord[i] === " ") {
+            filledLetters[i] = " ";
+        }
+        else {
+            filledLetters[i] = "_";
+        }
     }
     console.log(secretWord);
 
@@ -71,7 +78,13 @@ while (true) {
     alert("Ready Player One");
 
     while (lives > 0 && !won) {
-        guessedLetter = prompt("Guess a letter!");
+        guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
+
+        if (!isValid(guessedLetter)) {
+            alert("Enter a single letter, please");
+            continue;
+        }
+
         if (!alreadyGuessed(guessedLetter)) {
             lettersGuessed.push(guessedLetter.toUpperCase());
         }
@@ -86,9 +99,11 @@ while (true) {
         if (hasLetter(guessedLetter)) {
             fillAnswer(guessedLetter);
             lives++;
-            
-            if (filledLetters.every(isTrue)) {
+            console.log(lives);
+
+            if (filledLetters.every(isCorrect)) {
                 won = true;
+                wins++;
                 alert("A winner is you!");
             }
             else {
@@ -97,6 +112,7 @@ while (true) {
         }
         else {
             lives--;
+            console.log(lives);
             if (lives == 0) {
                 losses++;
                 alert("Game Over");
