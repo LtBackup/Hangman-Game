@@ -1,5 +1,5 @@
 var secretWord;
-var wordBank = ["Metroid", "Mega Man", "Mario", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger"];
+var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger", "The Sims", "Halo", "Tomb Raider", "Star Fox", "Pokemon", "Call Of Duty", "Tetris", "Need For Speed", "Grand Theft Auto", "Bomberman", "Prince of Persia", "Doom", "Crash Bandicoot", "Guilty Gear", "Silent Hill", "Half Life", "Metal Gear", "Dance Dance Revolution", "Kingdom Hearts", "Fallout", "Resident Evil", "Bioshock", "Gears of War", "Mass Effect", "God of War", "Diablo", "Starcraft", "Warcraft", "Tekken", "Street Fighter", "Soul Caliber"];
 var guessedLetter;
 var lettersGuessed = [];
 var filledLetters = [];
@@ -41,7 +41,6 @@ function fillAnswer(letter) {
     for (var i = 0; i < filledLetters.length; i++) {
         if (secretWord[i].toUpperCase() === letter.toUpperCase()) {
             filledLetters[i] = secretWord[i].toUpperCase();
-            console.log(filledLetters);
         }
     }
 }
@@ -71,7 +70,6 @@ while (true) {
             filledLetters[i] = "_";
         }
     }
-    console.log(secretWord);
 
     //begin the game engine
     alert("Press any key to start!");
@@ -99,7 +97,6 @@ while (true) {
         if (hasLetter(guessedLetter)) {
             fillAnswer(guessedLetter);
             lives++;
-            console.log(lives);
 
             if (filledLetters.every(isCorrect)) {
                 won = true;
@@ -112,7 +109,7 @@ while (true) {
         }
         else {
             lives--;
-            console.log(lives);
+            
             if (lives == 0) {
                 losses++;
                 alert("Game Over");
