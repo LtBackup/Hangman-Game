@@ -3,15 +3,30 @@ var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contr
 var guessedLetter;
 var lettersGuessed = [];
 var filledLetters = [];
+var start = false;
 var won = false;
 var lives = 4;
 var wins = 0;
 var losses = 0;
 
+var instructionDisplay = document.querySelector("#instruction-text");
+var answerDisplay = document.querySelector("#answer");
+
+document.addEventListener("keyup", begin());
+
+function begin(event){
+    start = true;
+    document.removeEventListener("keyup", begin());
+    document.addEventListener("keyup", myFunc);
+}
 
 function pickWord() {
     randomNumber = Math.floor(Math.random() * wordBank.length);
     return wordBank[randomNumber];
+}
+
+function setLetter(event){
+    guessedLetter=event.key;
 }
 
 function hasLetter(letter) {
@@ -56,11 +71,14 @@ function alreadyGuessed(letter) {
 function reset() {
     lettersGuessed = [];
     filledLetters = [];
+    start = false;
     won = false;
     lives = 4;
+    document.removeEventListener("keyup", setLetter());
+    document.addEventListener("keyup", begin());
 }
 
-while (true) {
+while (start) {
     secretWord = pickWord();
     for (var i = 0; i < secretWord.length; i++) {
         if (secretWord[i] === " ") {
@@ -72,11 +90,11 @@ while (true) {
     }
 
     //begin the game engine
-    alert("Press any key to start!");
-    alert("Ready Player One");
+    // alert("Press any key to start!");
+    // alert("Ready Player One");
 
     while (lives > 0 && !won) {
-        guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
+        //guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
 
         if (!isValid(guessedLetter)) {
             alert("Enter a single letter, please");
@@ -96,6 +114,7 @@ while (true) {
         //display guessed letter
         if (hasLetter(guessedLetter)) {
             fillAnswer(guessedLetter);
+            answerDisplay.innerText = filledLetters.join("");
             lives++;
 
             if (filledLetters.every(isCorrect)) {
@@ -109,7 +128,7 @@ while (true) {
         }
         else {
             lives--;
-            
+
             if (lives == 0) {
                 losses++;
                 alert("Game Over");
