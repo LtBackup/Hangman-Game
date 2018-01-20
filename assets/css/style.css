@@ -15,7 +15,11 @@ html, body{
 }
 
 .top-buffer{
-    height: 40vh;
+    height: 30vh;
+}
+
+.buffer{
+    margin-bottom: 20px;
 }
 
 #instruction-text{
@@ -49,5 +53,5 @@ html, body{
 }
 
 #guessedLetters{
-    
+
 }

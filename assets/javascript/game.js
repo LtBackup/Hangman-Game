@@ -11,22 +11,33 @@ var losses = 0;
 
 var instructionDisplay = document.querySelector("#instruction-text");
 var answerDisplay = document.querySelector("#answer");
+var statusDisplay = document.querySelector("#status");
+var livesDisplay = document.querySelector("#lives");
+var winsDisplay = document.querySelector("#wins");
+var lossesDisplay = document.querySelector("#losses");
+var guessedLettersDisplay = document.querySelector("#guessedLetters");
 
-document.addEventListener("keyup", begin());
-
-function begin(event){
+function begin(event) {
+    document.removeEventListener("keyup", begin);
+    secretWord = pickWord();
+    console.log(secretWord);
+    for (var i = 0; i < secretWord.length; i++) {
+        if (secretWord[i] === " ") {
+            filledLetters[i] = " ";
+        }
+        else {
+            filledLetters[i] = "_";
+        }
+    }
     start = true;
-    document.removeEventListener("keyup", begin());
-    document.addEventListener("keyup", myFunc);
+    console.log(start);
+    console.log(secretWord);
+    document.addEventListener("keyup", game);
 }
 
 function pickWord() {
     randomNumber = Math.floor(Math.random() * wordBank.length);
     return wordBank[randomNumber];
-}
-
-function setLetter(event){
-    guessedLetter=event.key;
 }
 
 function hasLetter(letter) {
@@ -74,75 +85,64 @@ function reset() {
     start = false;
     won = false;
     lives = 4;
-    document.removeEventListener("keyup", setLetter());
-    document.addEventListener("keyup", begin());
+    document.removeEventListener("keyup", setLetter);
+    document.addEventListener("keyup", begin);
+    instructionDisplay.innerText = "Welcome to video game hangman! Press any key to start";
 }
 
-while (start) {
-    secretWord = pickWord();
-    for (var i = 0; i < secretWord.length; i++) {
-        if (secretWord[i] === " ") {
-            filledLetters[i] = " ";
-        }
-        else {
-            filledLetters[i] = "_";
-        }
-    }
+function game(event) {
+        //begin the game engine
+        // alert("Press any key to start!");
 
-    //begin the game engine
-    // alert("Press any key to start!");
-    // alert("Ready Player One");
+        if (lives > 0 && !won) {
+            //guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
 
-    while (lives > 0 && !won) {
-        //guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
+            if (!isValid(guessedLetter)) {
+                statusDisplay.innerText = "Enter a single letter, please";
+                continue;
+            }
 
-        if (!isValid(guessedLetter)) {
-            alert("Enter a single letter, please");
-            continue;
-        }
-
-        if (!alreadyGuessed(guessedLetter)) {
-            lettersGuessed.push(guessedLetter.toUpperCase());
-        }
-        else {
-            alert("You already guessed that letter!");
-            continue;
-        }
-
-        console.log("guessed letters", lettersGuessed);
-
-        //display guessed letter
-        if (hasLetter(guessedLetter)) {
-            fillAnswer(guessedLetter);
-            answerDisplay.innerText = filledLetters.join("");
-            lives++;
-
-            if (filledLetters.every(isCorrect)) {
-                won = true;
-                wins++;
-                alert("A winner is you!");
+            if (!alreadyGuessed(guessedLetter)) {
+                lettersGuessed.push(guessedLetter.toUpperCase());
+                lettersGuessedDisplay.innerText = lettersGuessed.join("");
             }
             else {
-                alert("1-Up!");
+                statusDisplay.innerText = "You already guessed that letter!";
+                continue;
             }
-        }
-        else {
-            lives--;
 
-            if (lives == 0) {
-                losses++;
-                alert("Game Over");
+            if (hasLetter(guessedLetter)) {
+                fillAnswer(guessedLetter);
+                answerDisplay.innerText = filledLetters.join("");
+                lives++;
+
+                if (filledLetters.every(isCorrect)) {
+                    won = true;
+                    wins++;
+                    statusDisplay.innerText = "A winner is you!";
+                }
+                else {
+                    statusDisplay.innerText = "1-Up!";
+                }
             }
             else {
-                alert("Try Again!");
+                lives--;
+
+                if (lives == 0) {
+                    losses++;
+                    statusDisplay.innerText = "Game Over";
+                }
+                else {
+                    statusDisplay.innerText = "Try Again!";
+                }
             }
         }
+        console.log(start);
+        reset();
+        //alert("Resetting the game just for you!");
     }
-
-    reset();
-    alert("Resetting the game just for you!");
 }
 
-
+document.addEventListener("keyup", begin);
 
 
