@@ -1,13 +1,13 @@
-.box{
+/* .box{
     border-style: solid;
     border-width: 2px;
     border-color: #888;
-}
+} */
 
 html, body{
     background-color: black;
     font-family: 'Press Start 2P', cursive;
-    /* image courtesy of matthew http://i257.photobucket.com/albums/hh236/matthew3447/SpaceBG.gif*/
+    /* image courtesy of matthew3447 http://i257.photobucket.com/albums/hh236/matthew3447/SpaceBG.gif*/
     background-image: url("../images/SpaceBG.jpg");
     background-position: center top;
     color: white;
@@ -24,11 +24,11 @@ html, body{
 
 #instruction-text{
     font-size: 32px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 #status{
-
+    margin-bottom: 20px;
 }
 
 #answer{
@@ -53,5 +53,5 @@ html, body{
 }
 
 #guessedLetters{
-
+    letter-spacing: 15px;
 }

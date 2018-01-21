@@ -1,10 +1,8 @@
 var secretWord;
-var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger", "The Sims", "Halo", "Tomb Raider", "Star Fox", "Pokemon", "Call Of Duty", "Tetris", "Need For Speed", "Grand Theft Auto", "Bomberman", "Prince of Persia", "Doom", "Crash Bandicoot", "Guilty Gear", "Silent Hill", "Half Life", "Metal Gear", "Dance Dance Revolution", "Kingdom Hearts", "Fallout", "Resident Evil", "Bioshock", "Gears of War", "Mass Effect", "God of War", "Diablo", "Starcraft", "Warcraft", "Tekken", "Street Fighter", "Soul Caliber"];
+var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger", "The Sims", "Halo", "Tomb Raider", "Star Fox", "Pokemon", "Call Of Duty", "Tetris", "Need For Speed", "Grand Theft Auto", "Bomberman", "Prince of Persia", "Doom", "Crash Bandicoot", "Guilty Gear", "Silent Hill", "Half Life", "Metal Gear", "Dance Dance Revolution", "Kingdom Hearts", "Fallout", "Resident Evil", "Bioshock", "Gears of War", "Mass Effect", "God of War", "Diablo", "Starcraft", "Warcraft", "Tekken", "Street Fighter", "Soul Caliber", "Space Invaders"];
 var guessedLetter;
-var lettersGuessed = [];
+var lettersGuessed = [" "];
 var filledLetters = [];
-var start = false;
-var won = false;
 var lives = 4;
 var wins = 0;
 var losses = 0;
@@ -20,7 +18,6 @@ var guessedLettersDisplay = document.querySelector("#guessedLetters");
 function begin(event) {
     document.removeEventListener("keyup", begin);
     secretWord = pickWord();
-    console.log(secretWord);
     for (var i = 0; i < secretWord.length; i++) {
         if (secretWord[i] === " ") {
             filledLetters[i] = " ";
@@ -29,15 +26,41 @@ function begin(event) {
             filledLetters[i] = "_";
         }
     }
-    start = true;
-    console.log(start);
-    console.log(secretWord);
     document.addEventListener("keyup", game);
+    updateLives();
+    updateWins();
+    updateLosses();
+    updateAnswer();
+    updateGuessedLetters();
+    instructionDisplay.innerText = "Guess a letter!";
+    statusDisplay.innerText = "Ready Player One";
 }
 
 function pickWord() {
     randomNumber = Math.floor(Math.random() * wordBank.length);
     return wordBank[randomNumber];
+}
+
+function updateLives() {
+    livesDisplay.innerText = lives;
+}
+
+function updateWins() {
+    instructionDisplay.innerText = "A winner is you!";
+    statusDisplay.innerText = "Press any key to play again";
+    winsDisplay.innerText = wins;
+}
+
+function updateLosses() {
+    lossesDisplay.innerText = losses;
+}
+
+function updateAnswer() {
+    answerDisplay.innerText = filledLetters.join("");
+}
+
+function updateGuessedLetters() {
+    guessedLettersDisplay.innerText = lettersGuessed.join("");
 }
 
 function hasLetter(letter) {
@@ -82,44 +105,27 @@ function alreadyGuessed(letter) {
 function reset() {
     lettersGuessed = [];
     filledLetters = [];
-    start = false;
-    won = false;
     lives = 4;
-    document.removeEventListener("keyup", setLetter);
+    document.removeEventListener("keyup", game);
     document.addEventListener("keyup", begin);
-    instructionDisplay.innerText = "Welcome to video game hangman! Press any key to start";
 }
 
 function game(event) {
-        //begin the game engine
-        // alert("Press any key to start!");
-
-        if (lives > 0 && !won) {
-            //guessedLetter = prompt("Lives: " + lives + "\n" + filledLetters + "\nGuess a letter!");
-
-            if (!isValid(guessedLetter)) {
-                statusDisplay.innerText = "Enter a single letter, please";
-                continue;
-            }
-
-            if (!alreadyGuessed(guessedLetter)) {
-                lettersGuessed.push(guessedLetter.toUpperCase());
-                lettersGuessedDisplay.innerText = lettersGuessed.join("");
-            }
-            else {
-                statusDisplay.innerText = "You already guessed that letter!";
-                continue;
-            }
-
+    guessedLetter = event.key;
+    if (isValid(guessedLetter)) {
+        if (!alreadyGuessed(guessedLetter)) {
+            lettersGuessed.push(guessedLetter.toUpperCase());
+            updateGuessedLetters();
             if (hasLetter(guessedLetter)) {
                 fillAnswer(guessedLetter);
-                answerDisplay.innerText = filledLetters.join("");
+                updateAnswer();
                 lives++;
+                updateLives();
 
                 if (filledLetters.every(isCorrect)) {
-                    won = true;
                     wins++;
-                    statusDisplay.innerText = "A winner is you!";
+                    updateWins();
+                    reset();
                 }
                 else {
                     statusDisplay.innerText = "1-Up!";
@@ -127,19 +133,27 @@ function game(event) {
             }
             else {
                 lives--;
-
-                if (lives == 0) {
+                updateLives();
+                console.log(typeof lives);
+                if (lives === 0) {
                     losses++;
-                    statusDisplay.innerText = "Game Over";
+                    updateLosses();
+                    instructionDisplay.innerText = "Game Over";
+                    statusDisplay.innerText = "Press any key to play again";
+                    reset();
                 }
                 else {
                     statusDisplay.innerText = "Try Again!";
                 }
             }
+
         }
-        console.log(start);
-        reset();
-        //alert("Resetting the game just for you!");
+        else {
+            statusDisplay.innerText = "You already guessed that letter!";
+        }
+    }
+    else {
+        statusDisplay.innerText = "Enter a letter, please";
     }
 }
 
