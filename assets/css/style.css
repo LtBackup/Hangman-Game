@@ -1,0 +1,41 @@
+html, body{
+    background-color: black;
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 16px;
+    /* image courtesy of matthew3447 http://i257.photobucket.com/albums/hh236/matthew3447/SpaceBG.gif*/
+    background-image: url("../images/SpaceBG.jpg");
+    background-position: center top;
+    color: white;
+
+}
+
+#vertCenter{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.buffer{
+    margin-bottom: 20px;
+}
+
+#instruction-text{
+    font-size: 32px;
+    margin-bottom: 50px;
+}
+
+#status{
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#answer{
+    font-size: 32px;
+    letter-spacing: 32px;
+    margin-bottom: 10px;
+}
+
+#guessedLetters{
+    letter-spacing: 10px;
+}
