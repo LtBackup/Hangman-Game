@@ -6,7 +6,8 @@
 
 html, body{
     background-color: black;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 16px;
     /* image courtesy of matthew3447 http://i257.photobucket.com/albums/hh236/matthew3447/SpaceBG.gif*/
     background-image: url("../images/SpaceBG.jpg");
     background-position: center top;
@@ -14,8 +15,15 @@ html, body{
 
 }
 
-.top-buffer{
+/* .top-buffer{
     height: 30vh;
+} */
+
+#vertCenter{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .buffer{
@@ -28,12 +36,14 @@ html, body{
 }
 
 #status{
+    font-size: 24px;
     margin-bottom: 20px;
 }
 
 #answer{
     font-size: 32px;
     letter-spacing: 32px;
+    margin-bottom: 10px;
 }
 
 #lives{
@@ -53,5 +63,5 @@ html, body{
 }
 
 #guessedLetters{
-    letter-spacing: 15px;
+    letter-spacing: 10px;
 }
