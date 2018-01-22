@@ -37,5 +37,6 @@ html, body{
 }
 
 #guessedLetters{
-    letter-spacing: 10px;
+    letter-spacing: 15px;
+    overflow-wrap: break-word;
 }
