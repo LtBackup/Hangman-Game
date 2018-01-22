@@ -15,10 +15,10 @@ var winsDisplay = document.querySelector("#wins");
 var lossesDisplay = document.querySelector("#losses");
 var guessedLettersDisplay = document.querySelector("#guessedLetters");
 
-var audio1Up = new Audio("../audio/smb_1-up.wav");
-var audioWrong = new Audio("../audio/bosspain.wav");
-//var audioWin = new Audio("../audio/");
-//var audioLose = new Audio("../audio/");
+var audio1Up = new Audio("assets/audio/smb_1-up.wav");
+var audioWrong = new Audio("assets/audio/bosspain.wav");
+var audioWin = new Audio("assets/audio/FF7_Victory_Fanfare.mp3");
+var audioLose = new Audio("assets/audio/smb_mariodie.wav");
 
 function begin(event) {
     document.removeEventListener("keyup", begin);
@@ -125,25 +125,25 @@ function game(event) {
                 fillAnswer(guessedLetter);
                 updateAnswer();
                 lives++;
-                audio1Up.play();
                 updateLives();
 
                 if (filledLetters.every(isCorrect)) {
                     wins++;
+                    audioWin.play();
                     updateWins();
                     reset();
                 }
                 else {
                     statusDisplay.innerText = "1-Up!";
+                    audio1Up.play();
                 }
             }
             else {
                 lives--;
-                audioWrong.play();
                 updateLives();
-                console.log(typeof lives);
                 if (lives === 0) {
                     losses++;
+                    audioLose.play();
                     updateLosses();
                     instructionDisplay.innerText = "Game Over";
                     statusDisplay.innerText = "Press any key to play again";
@@ -151,18 +151,17 @@ function game(event) {
                 }
                 else {
                     statusDisplay.innerText = "Try Again!";
+                    audioWrong.play();
                 }
             }
 
         }
         else {
             statusDisplay.innerText = "You already guessed that letter!";
-            audioWrong.play();
         }
     }
     else {
         statusDisplay.innerText = "Enter a letter, please";
-        audioWrong.play();
     }
 }
 
