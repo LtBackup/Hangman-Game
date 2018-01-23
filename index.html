@@ -1,68 +1,57 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Video Game Hangman</title>
-    <!-- Favicon credited to Quidditch33 http://piq.codeus.net/picture/231592/hangman -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
-</head>
+    <head>
+        <title>Video Game Hangman</title>
+        <!-- Favicon credited to Quidditch33 http://piq.codeus.net/picture/231592/hangman -->
+        <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+        <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
+    </head>
 
-<body>
-    <div class="container" id="vertCenter">
-        <div class="row">
-            <div class="col-xs-12 text-center" id="instruction-text">
-                Welcome to video game hangman! Press any key to start
+    <body>
+        <div class="container" id="vertCenter">
+            <div class="row">
+                <div class="col-xs-12 text-center" id="instruction-text">
+                    Welcome to video game hangman! Press any key to start
+                </div>
             </div>
-        </div>
-        <div class="row buffer">
-            <div class="col-xs-12 text-center" id="status">
-                Ready Player One
+            <div class="row buffer">
+                <div class="col-xs-12 text-center" id="status">
+                    Ready Player One
+                </div>
             </div>
-        </div>
-        <div class="row buffer">
-            <div class="col-xs-12 text-center" id="answer">
+            <div class="row buffer">
+                <div class="col-xs-12 text-center" id="answer">
+                </div>
             </div>
-        </div>
-        <div class="row buffer">
-            <div class="col-xs-2 text-center">
-                Lives:
+            <div class="row buffer">
+                <div class="col-xs-4 text-center" id="lives">
+                    Lives: 3
+                </div>
+                <div class="col-xs-4 text-center" id="wins">
+                    Wins: 0
+                </div>
+                <div class="col-xs-4 text-center" id="losses">
+                    Losses: 0
+                </div>
             </div>
-            <div class="col-xs-2 text-center" id="lives">
-                0
-            </div>
-            <div class="col-xs-2 text-center">
-                Wins:
-            </div>
-            <div class="col-xs-2 text-center" id="wins">
-                0
-            </div>
-            <div class="col-xs-2 text-center">
-                Losses:
-            </div>
-            <div class="col-xs-2 text-center" id="losses">
-                0
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4 text-left" id="guessedLettersText">
-                Guessed Letters:
-            </div>
-            <div class="col-xs-8 text-left" id="guessedLetters">
+            <div class="row">
+                <div class="col-xs-4 text-left" id="guessedLettersText">
+                    Guessed Letters:
+                </div>
+                <div class="col-xs-8 text-left" id="guessedLetters">
 
+                </div>
             </div>
         </div>
-    </div>
-    <button id="mute">UNMUTE</button>
-</body>
+        <button id="mute">UNMUTE</button>
+    </body>
 
-<script src="assets/javascript/game.js"></script>
-<script src="assets/javascript/dom.js"></script>
-
+    <script src="assets/javascript/game.js"></script>
 
 </html>

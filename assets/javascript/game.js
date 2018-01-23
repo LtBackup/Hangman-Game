@@ -16,6 +16,8 @@ var livesDisplay = document.querySelector("#lives");
 var winsDisplay = document.querySelector("#wins");
 var lossesDisplay = document.querySelector("#losses");
 var guessedLettersDisplay = document.querySelector("#guessedLetters");
+var muteObject = document.querySelector("#mute");
+
 
 var audio1Up = new Audio("assets/audio/smb_1-up.wav");
 var audioWrong = new Audio("assets/audio/bosspain.wav");
@@ -49,17 +51,15 @@ function pickWord() {
 }
 
 function updateLives() {
-    livesDisplay.innerText = lives;
+    livesDisplay.innerText = "Lives: " + lives;
 }
 
 function updateWins() {
-    instructionDisplay.innerText = "A Winner Is You!";
-    statusDisplay.innerText = "Press any key to play again";
     winsDisplay.innerText = "Wins: " + wins;
 }
 
 function updateLosses() {
-    lossesDisplay.innerText = "losses: " + losses;
+    lossesDisplay.innerText = "Losses: " + losses;
 }
 
 function updateAnswer() {
@@ -144,6 +144,8 @@ function game(event) {
                     if (!mute) {
                         audioWin.play();
                     }
+                    instructionDisplay.innerText = "A Winner Is You!";
+                    statusDisplay.innerText = "Press any key to play again";
                     updateWins();
                     reset();
                 }
@@ -162,9 +164,9 @@ function game(event) {
                     if (!mute) {
                         audioLose.play();
                     }
-                    updateLosses();
                     instructionDisplay.innerText = "Game Over";
                     statusDisplay.innerText = "Press any key to play again";
+                    updateLosses();
                     reset();
                 }
                 else {
@@ -186,8 +188,5 @@ function game(event) {
 }
 
 document.addEventListener("keyup", begin);
-var muteObject = document.querySelector("#mute");
-console.log(muteObject);
 muteObject.addEventListener("click", toggleMute);
-console.log(mute);
 
