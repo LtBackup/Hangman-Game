@@ -7,7 +7,7 @@ var lives = 3;
 var wins = 0;
 var losses = 0;
 var mute = true;
-//sound effects are from Nintendo and Square Enix. all rights belong to their respective owners
+//sound effects are from Nintendo and Square Enix. All rights belong to their respective owners
 
 var instructionDisplay = document.querySelector("#instruction-text");
 var answerDisplay = document.querySelector("#answer");
