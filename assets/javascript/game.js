@@ -1,11 +1,13 @@
 var secretWord;
-var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger", "The Sims", "Halo", "Tomb Raider", "Star Fox", "Pokemon", "Call Of Duty", "Tetris", "Need For Speed", "Grand Theft Auto", "Bomberman", "Prince of Persia", "Doom", "Crash Bandicoot", "Guilty Gear", "Silent Hill", "Half Life", "Metal Gear", "Dance Dance Revolution", "Kingdom Hearts", "Fallout", "Resident Evil", "Bioshock", "Gears of War", "Mass Effect", "God of War", "Diablo", "Starcraft", "Warcraft", "Tekken", "Street Fighter", "Soul Caliber", "Space Invaders"];
+var wordBank = ["Metroid", "Mega Man", "Super Mario Bros", "Castlevania", "Contra", "Devil May Cry", "Asteroids", "Galaga", "Donkey Kong", "Mortal Kombat", "Super Smash Bros", "Final Fantasy", "Pac Man", "Fire Emblem", "Legend of Zelda", "Sonic the Hedgehog", "Chrono Trigger", "The Sims", "Halo", "Tomb Raider", "Star Fox", "Pokemon", "Call Of Duty", "Tetris", "Need For Speed", "Grand Theft Auto", "Bomberman", "Doom", "Crash Bandicoot", "Guilty Gear", "Silent Hill", "Half Life", "Metal Gear", "Dance Dance Revolution", "Kingdom Hearts", "Fallout", "Resident Evil", "Bioshock", "Gears of War", "Mass Effect", "God of War", "Diablo", "Starcraft", "Warcraft", "Tekken", "Street Fighter", "SoulCaliber", "Space Invaders", "Medal of Honor", "Paperboy", "Doom", "Guitar Hero", "Angry Birds", "Gran Turismo", "Pong", "Portal", "Braid", "Mario Kart", "Mario Party", "Wolfenstein", "Myst", "Quake", "Counter Strike", "SimCity", "Civilization", "Minecraft", "The Oregon Trail", "Doodle Jump", "Advance Wars", "Breath of Fire", "Defender", "Joust", "Gauntlet", "Double Dragon", "Prince of Persia", "Shadow of the Colossus", "Streets of Rage", "The Secret of Monkey Island", "Grim Fandango", "Lemmings", "Adventure", "Gunstar Heroes", "Secret of Mana", "Earthbound", "Panzer Dragoon", "Thief", "Shenmue", "Unreal", "Deus Ex", "Jet Set Radio", "Max Payne", "Burnout", "Phoenix Wright", "Katamari Damacy", "The Elder Scrolls", "Okami", "Dead Space", "Uncharted", "Rock Band", "Dark Souls", "The Witcher", "Snake", "Centipede", "Zero Wing", "Missile Command", "Missile Command"];
 var guessedLetter;
-var lettersGuessed = [" "];
+var lettersGuessed = [];
 var filledLetters = [];
-var lives = 4;
+var lives = 3;
 var wins = 0;
 var losses = 0;
+var mute = true;
+//sound effects are from Nintendo and Square Enix. All rights belong to their respective owners
 
 var instructionDisplay = document.querySelector("#instruction-text");
 var answerDisplay = document.querySelector("#answer");
@@ -14,6 +16,13 @@ var livesDisplay = document.querySelector("#lives");
 var winsDisplay = document.querySelector("#wins");
 var lossesDisplay = document.querySelector("#losses");
 var guessedLettersDisplay = document.querySelector("#guessedLetters");
+var muteObject = document.querySelector("#mute");
+
+
+var audio1Up = new Audio("assets/audio/smb_1-up.wav");
+var audioWrong = new Audio("assets/audio/bosspain.wav");
+var audioWin = new Audio("assets/audio/FF7_Victory_Fanfare.mp3");
+var audioLose = new Audio("assets/audio/smb_mariodie.wav");
 
 function begin(event) {
     document.removeEventListener("keyup", begin);
@@ -42,17 +51,15 @@ function pickWord() {
 }
 
 function updateLives() {
-    livesDisplay.innerText = lives;
+    livesDisplay.innerText = "Lives: " + lives;
 }
 
 function updateWins() {
-    instructionDisplay.innerText = "A winner is you!";
-    statusDisplay.innerText = "Press any key to play again";
-    winsDisplay.innerText = wins;
+    winsDisplay.innerText = "Wins: " + wins;
 }
 
 function updateLosses() {
-    lossesDisplay.innerText = losses;
+    lossesDisplay.innerText = "Losses: " + losses;
 }
 
 function updateAnswer() {
@@ -102,10 +109,20 @@ function alreadyGuessed(letter) {
     return false;
 }
 
+function toggleMute() {
+    mute = !mute;
+    if (mute) {
+        muteObject.innerText = "UNMUTE";
+    }
+    else {
+        muteObject.innerText = "MUTE";
+    }
+}
+
 function reset() {
     lettersGuessed = [];
     filledLetters = [];
-    lives = 4;
+    lives = 3;
     document.removeEventListener("keyup", game);
     document.addEventListener("keyup", begin);
 }
@@ -124,26 +141,39 @@ function game(event) {
 
                 if (filledLetters.every(isCorrect)) {
                     wins++;
+                    if (!mute) {
+                        audioWin.play();
+                    }
+                    instructionDisplay.innerText = "A Winner Is You!";
+                    statusDisplay.innerText = "Press any key to play again";
                     updateWins();
                     reset();
                 }
                 else {
                     statusDisplay.innerText = "1-Up!";
+                    if (!mute) {
+                        audio1Up.play();
+                    }
                 }
             }
             else {
                 lives--;
                 updateLives();
-                console.log(typeof lives);
                 if (lives === 0) {
                     losses++;
-                    updateLosses();
+                    if (!mute) {
+                        audioLose.play();
+                    }
                     instructionDisplay.innerText = "Game Over";
                     statusDisplay.innerText = "Press any key to play again";
+                    updateLosses();
                     reset();
                 }
                 else {
                     statusDisplay.innerText = "Try Again!";
+                    if (!mute) {
+                        audioWrong.play();
+                    }
                 }
             }
 
@@ -158,5 +188,5 @@ function game(event) {
 }
 
 document.addEventListener("keyup", begin);
-
+muteObject.addEventListener("click", toggleMute);
 
