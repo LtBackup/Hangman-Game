@@ -6,6 +6,8 @@ var filledLetters = [];
 var lives = 3;
 var wins = 0;
 var losses = 0;
+var mute = true;
+//sound effects are from Nintendo and Square Enix. all rights belong to their respective owners
 
 var instructionDisplay = document.querySelector("#instruction-text");
 var answerDisplay = document.querySelector("#answer");
@@ -51,13 +53,13 @@ function updateLives() {
 }
 
 function updateWins() {
-    instructionDisplay.innerText = "A winner is you!";
+    instructionDisplay.innerText = "A Winner Is You!";
     statusDisplay.innerText = "Press any key to play again";
-    winsDisplay.innerText = wins;
+    winsDisplay.innerText = "Wins: " + wins;
 }
 
 function updateLosses() {
-    lossesDisplay.innerText = losses;
+    lossesDisplay.innerText = "losses: " + losses;
 }
 
 function updateAnswer() {
@@ -107,6 +109,16 @@ function alreadyGuessed(letter) {
     return false;
 }
 
+function toggleMute() {
+    mute = !mute;
+    if (mute) {
+        muteObject.innerText = "UNMUTE";
+    }
+    else {
+        muteObject.innerText = "MUTE";
+    }
+}
+
 function reset() {
     lettersGuessed = [];
     filledLetters = [];
@@ -129,13 +141,17 @@ function game(event) {
 
                 if (filledLetters.every(isCorrect)) {
                     wins++;
-                    audioWin.play();
+                    if (!mute) {
+                        audioWin.play();
+                    }
                     updateWins();
                     reset();
                 }
                 else {
                     statusDisplay.innerText = "1-Up!";
-                    audio1Up.play();
+                    if (!mute) {
+                        audio1Up.play();
+                    }
                 }
             }
             else {
@@ -143,7 +159,9 @@ function game(event) {
                 updateLives();
                 if (lives === 0) {
                     losses++;
-                    audioLose.play();
+                    if (!mute) {
+                        audioLose.play();
+                    }
                     updateLosses();
                     instructionDisplay.innerText = "Game Over";
                     statusDisplay.innerText = "Press any key to play again";
@@ -151,7 +169,9 @@ function game(event) {
                 }
                 else {
                     statusDisplay.innerText = "Try Again!";
-                    audioWrong.play();
+                    if (!mute) {
+                        audioWrong.play();
+                    }
                 }
             }
 
@@ -166,5 +186,8 @@ function game(event) {
 }
 
 document.addEventListener("keyup", begin);
-
+var muteObject = document.querySelector("#mute");
+console.log(muteObject);
+muteObject.addEventListener("click", toggleMute);
+console.log(mute);
 

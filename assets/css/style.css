@@ -1,3 +1,13 @@
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: 0px -480px;}
+}
+
+@-webkit-keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: 0px -480px;}
+}
+
 html, body{
     background-color: black;
     font-family: 'Press Start 2P', sans-serif;
@@ -5,8 +15,23 @@ html, body{
     /* image courtesy of matthew3447 http://i257.photobucket.com/albums/hh236/matthew3447/SpaceBG.gif*/
     background-image: url("../images/SpaceBG.jpg");
     background-position: center top;
-    color: white;
+    color: yellow;
+    -webkit-animation: backgroundScroll 5s linear 1;
+    -webkit-animation-fill-mode: forwards;
+    animation: backgroundScroll 5s linear 1;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
 
+button {
+    background-color: #444444;
+    min-width: 10%;
+    text-align: center;
+    z-index: 2;
+    color: white;
+    position: fixed;
+    top: 20px;
+    left: 20px;
 }
 
 #vertCenter{
@@ -17,7 +42,7 @@ html, body{
 }
 
 .buffer{
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 #instruction-text{
@@ -39,4 +64,10 @@ html, body{
 #guessedLetters{
     letter-spacing: 15px;
     overflow-wrap: break-word;
+}
+
+#audioControls{
+    position: fixed;
+    top: 5px;
+    left: 5px;
 }
