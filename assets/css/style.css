@@ -23,9 +23,20 @@ html, body{
     animation-iteration-count: infinite;
 }
 
-button {
+#mute {
     background-color: #444444;
     min-width: 10%;
+    text-align: center;
+    color: white;
+    position: fixed;
+    top: 70px;
+    left: 20px;
+}
+
+#keyboard {
+    background-color: #444444;
+    min-width: 10%;
+    min-height: 10%;
     text-align: center;
     color: white;
     position: fixed;
