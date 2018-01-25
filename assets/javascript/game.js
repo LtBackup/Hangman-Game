@@ -25,7 +25,7 @@ var audioWin = new Audio("assets/audio/FF7_Victory_Fanfare.mp3");
 var audioLose = new Audio("assets/audio/smb_mariodie.wav");
 
 function begin(event) {
-    document.removeEventListener("keyup input", begin);
+    document.removeEventListener("keyup", begin);
     secretWord = pickWord();
     for (var i = 0; i < secretWord.length; i++) {
         if (secretWord[i] === " ") {
@@ -35,7 +35,7 @@ function begin(event) {
             filledLetters[i] = "_";
         }
     }
-    document.addEventListener("keyup input", game);
+    document.addEventListener("keyup", game);
     updateLives();
     updateWins();
     updateLosses();
@@ -123,8 +123,8 @@ function reset() {
     lettersGuessed = [];
     filledLetters = [];
     lives = 3;
-    document.removeEventListener("keyup input", game);
-    document.addEventListener("keyup input", begin);
+    document.removeEventListener("keyup", game);
+    document.addEventListener("keyup", begin);
 }
 
 function game(event) {
@@ -187,12 +187,13 @@ function game(event) {
     }
 }
 
-document.addEventListener("keyup input", begin);
+document.addEventListener("keyup", begin);
 muteObject.addEventListener("click", toggleMute);
-document.getElementById("keyboard").addEventListener("click", function(){
-    var inputElement = document.getElementById("hiddenInput");
-    inputElement.style.visibility = "visible";
-    inputElement.focus();
-    inputElement.style.visibility = "hidden";
-});
+// document.getElementById("keyboard").addEventListener("click", function(){
+//     var inputElement = document.getElementById("hiddenInput");
+//     inputElement.style.visibility = "visible";
+//     inputElement.focus();
+//     inputElement.style.visibility = "hidden";
+// });
+//mobile support in progress
 
