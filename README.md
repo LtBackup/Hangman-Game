@@ -9,7 +9,7 @@ Good luck!
 
 ## Author
 
-* **Jim Pratt**
+* Jim Pratt
 
 ## Technologies Used
 * Bootstrap - CSS library
