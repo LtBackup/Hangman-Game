@@ -7,6 +7,10 @@ Use your keyboard to input letters. A correct guess gives you a life, and an inc
 
 Good luck!
 
+## Author
+
+* **Jim Pratt**
+
 ## Technologies Used
 * Bootstrap - CSS library
 
